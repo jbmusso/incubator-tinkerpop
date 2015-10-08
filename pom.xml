@@ -664,7 +664,7 @@ limitations under the License.
                         </executions>
                         <configuration>
                             <includes>
-                                <include>${asciidoc.input.dir}/*.asciidoc</include>
+                                <include>${asciidoc.input.dir}/**/*.asciidoc</include>
                             </includes>
                             <replacements>
                                 <replacement>
@@ -679,6 +679,7 @@ limitations under the License.
                         <artifactId>asciidoctor-maven-plugin</artifactId>
                         <inherited>false</inherited>
                         <executions>
+                            <!-- this generates the TinkerPop reference docs -->
                             <execution>
                                 <id>asciidoc-to-docbook</id>
                                 <phase>generate-resources</phase>
@@ -686,7 +687,7 @@ limitations under the License.
                                     <goal>process-asciidoc</goal>
                                 </goals>
                                 <configuration>
-                                    <sourceDirectory>${asciidoc.input.dir}</sourceDirectory>
+                                    <sourceDirectory>${asciidoc.input.dir}/book</sourceDirectory>
                                     <sourceDocumentName>index.asciidoc</sourceDocumentName>
                                     <outputDirectory>${htmlsingle.output.dir}</outputDirectory>
                                     <backend>html5</backend>
@@ -697,6 +698,30 @@ limitations under the License.
                                         <toc>true</toc>
                                         <toclevels>3</toclevels>
                                         <toc-position>left</toc-position>
+                                        <!--<iconsdir>images/icons</iconsdir>-->
+                                        <!-- AsciiDoctor CSS3-based theme configuration -->
+                                        <stylesdir>${asciidoctor.style.dir}</stylesdir>
+                                        <stylesheet>tinkerpop.css</stylesheet>
+                                        <source-highlighter>coderay</source-highlighter>
+                                        <basedir>${project.basedir}</basedir>
+                                    </attributes>
+                                </configuration>
+                            </execution>
+                            <!-- this generates the TinkerPop articles -->
+                            <execution>
+                                <id>asciidoc-to-article</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>process-asciidoc</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceDirectory>${asciidoc.input.dir}/article</sourceDirectory>
+                                    <outputDirectory>${htmlsingle.output.dir}</outputDirectory>
+                                    <backend>html5</backend>
+                                    <doctype>article</doctype>
+                                    <attributes>
+                                        <imagesdir>images</imagesdir>
+                                        <encoding>UTF-8</encoding>
                                         <!--<iconsdir>images/icons</iconsdir>-->
                                         <!-- AsciiDoctor CSS3-based theme configuration -->
                                         <stylesdir>${asciidoctor.style.dir}</stylesdir>

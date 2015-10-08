@@ -23,8 +23,11 @@ pushd "$(dirname $0)/.." > /dev/null
 if [ "$1" == "--dryRun" ]; then
 
   mkdir -p target/postprocess-asciidoc/tmp
-  cp -R docs/{static,stylesheets} target/postprocess-asciidoc/
-  cp docs/src/*.asciidoc target/postprocess-asciidoc/
+  mkdir -p target/postprocess-asciidoc/book
+  mkdir -p target/postprocess-asciidoc/article
+  cp -R docs/{static,stylesheets} target/postprocess-asciidoc
+  cp docs/src/book/*.asciidoc target/postprocess-asciidoc/book
+  cp docs/src/article/*.asciidoc target/postprocess-asciidoc/article
   ec=$?
 
 else

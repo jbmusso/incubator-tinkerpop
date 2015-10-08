@@ -25,7 +25,7 @@ AWK_SCRIPTS="${TP_HOME}/docs/preprocessor/awk"
 
 input=$2
 name=`basename ${input}`
-output="${TP_HOME}/target/postprocess-asciidoc/${name}"
+output="${TP_HOME}/target/postprocess-asciidoc/book/${name}"
 
 if hash stdbuf 2> /dev/null; then
   lb="stdbuf -oL"

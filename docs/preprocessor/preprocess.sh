@@ -55,7 +55,10 @@ function directory {
 }
 
 mkdir -p target/postprocess-asciidoc/tmp
+mkdir -p target/postprocess-asciidoc/book
+mkdir -p target/postprocess-asciidoc/article
 cp -R docs/{static,stylesheets} target/postprocess-asciidoc/
+cp -R docs/src/article target/postprocess-asciidoc/article
 
 TP_HOME=`pwd`
 CONSOLE_HOME=`directory "${TP_HOME}/gremlin-console/target/apache-gremlin-console-*-standalone"`
@@ -116,10 +119,10 @@ echo
 echo "============================"
 echo "+   Processing AsciiDocs   +"
 echo "============================"
-find "${TP_HOME}/docs/src/" -name "*.asciidoc" |
+find "${TP_HOME}/docs/src/book/" -name "*.asciidoc" |
      xargs -n1 basename |
-     xargs -n1 -I {} echo "echo -ne {}' '; (grep -n {} ${TP_HOME}/docs/src/index.asciidoc || echo 0) | cut -d ':' -f1" | /bin/bash | sort -nk2 | cut -d ' ' -f1 |
-     xargs -n1 -I {} echo "${TP_HOME}/docs/src/{}" |
+     xargs -n1 -I {} echo "echo -ne {}' '; (grep -n {} ${TP_HOME}/docs/src/book/index.asciidoc || echo 0) | cut -d ':' -f1" | /bin/bash | sort -nk2 | cut -d ' ' -f1 |
+     xargs -n1 -I {} echo "${TP_HOME}/docs/src/book/{}" |
      xargs -n1 ${TP_HOME}/docs/preprocessor/preprocess-file.sh "${CONSOLE_HOME}"
 
 ps=(${PIPESTATUS[@]})
